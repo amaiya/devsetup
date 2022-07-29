@@ -20,16 +20,18 @@ You may need to [configure](https://askubuntu.com/questions/73287/how-do-i-insta
 2. Create a directory for extra CA certificates in /usr/local/share/ca-certificates: `sudo mkdir /usr/local/share/ca-certificates/extra`
 3. Copy the CA .crt file to this directory: `sudo cp foo.crt /usr/local/share/ca-certificates/extra/foo.crt`
 4. Let Ubuntu add the .crt file's path relative to /usr/local/share/ca-certificates to /etc/ca-certificates.conf: `sudo update-ca-certificates`
+5. Run: `pip config set global.cert /etc/ssl/certs`
 
 The above should work fairly well with the with system Python in WSL.  However, if using Conda or Mamba, you may need some extra workarounds.
 To begin, bundle your `.crt` files into a single file, `ca-bundle.crt`. Then, follow the steps below as needed:
 
-### For `conda`, `mamba`, `pip`, and `git`
+
+#### For problems with `pip`, `conda` and `mamba`, and `git`
 ```python
-conda config --set ssl_verify path/to/ca-bundle.crt
-conda config --show ssl_verify
 pip config set global.cert path/to/ca-bundle.crt
 pip config list
+conda config --set ssl_verify path/to/ca-bundle.crt
+conda config --show ssl_verify
 
 # Bonus while we are here...
 git config --global http.sslVerify true
@@ -37,7 +39,7 @@ git config --global http.sslCAInfo path/to/ca-bundle.crt
 ```
 [Reference](https://stackoverflow.com/questions/39356413/how-to-add-a-custom-ca-root-certificate-to-the-ca-store-used-by-pip-in-windows/52961564#52961564)
 
-### For `requests`:
+### For problems with `requests`:
 ```python
 import requests
 import os
@@ -45,7 +47,7 @@ os.environ['REQUESTS_CA_BUNDLE'] = 'path/to/ca-bundle.crt'
 print(requests.get('https://www.google.com').status_code) # returns 200
 ```
 
-### For `urllib`:
+### For problems with `urllib`:
 ```python
 import urllib.request as urlrq
 import ssl

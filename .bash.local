@@ -24,3 +24,9 @@ if [ ! -e /notebooks/git ]; then
 fi
 export PATH=~/.local/bin:~/conda/bin/:$PATH
 export MAMBA_ROOT_PREFIX=~/conda
+
+# aliases
+alias rm="rm -i"
+alias rmf="rm -rfi"
+alias cleantex="rm -f *.aux *.dvi *.lis *.log *.blg *.bbl *.toc *.glo *.idx *.lof *.lot *.toc *.brf *.xcp *.synctex.    gz *.out"
+alias cleanpy="rm -f *.pyc"

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+  
+#-----------------------------------------
+# This file is purely for Paperspace setup
+#-----------------------------------------
+
+if [ ! -e ~/.config ]; then
+    cd
+    rm -rf .jupyter .local .ssh .bash_history
+    for p in .jupyter .local .ssh .bash_history 
+    #.git-credentials .gitconfig conda .kaggle .config .fastai .ipython
+    do
+        ln -s /storage/cfg/$p
+    done
+fi
+
+if [ ! -e ~/.cache/torch ]; then
+    ln -s /storage/cfg/torch ~/.cache/
+    ln -s /storage/cfg/huggingface ~/.cache/
+fi
+
+if [ ! -e /notebooks/git ]; then
+    ln -s /storage/git /notebooks/
+fi
+export PATH=~/.local/bin:~/conda/bin/:$PATH
+export MAMBA_ROOT_PREFIX=~/conda

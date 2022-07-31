@@ -23,9 +23,28 @@ You may need to [configure](https://askubuntu.com/questions/73287/how-do-i-insta
 5. Point `pip` to your CA certificates: `pip config set global.cert /etc/ssl/certs`
 6. Point `requests` to your CA certificates by adding this to your `.bashrc` file: `export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt`
 
-The above should work fairly well with the with system Python in WSL.  However, if using Conda or Mamba, you may need some extra workarounds.
-To begin, bundle your `.crt` files into a single file, `ca-bundle.crt`. Then, follow the steps below as needed:
+The above should work fairly well with the system Python in WSL/Ubuntu.  However, if using Conda or Mamba, you may need some extra workarounds shown below.
+For instance, issues with `urllib` (e.g., when running `nltk.download`) have been observed. 
 
+
+#### For problems with `urllib`:
+```python
+# You'll have to add this to the top of your code:
+import urllib.request as urlrq
+import ssl
+try:
+   _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+   pass
+else:
+   ssl._create_default_https_context = _create_unverified_https_context
+print(urlrq.urlopen('https://www.google.com').status) # returns 200
+```
+[Reference](https://stackoverflow.com/questions/38916452/nltk-download-ssl-certificate-verify-failed)
+
+
+
+The following steps assume that you have bundled the CA `.crt` files into a single file, `ca-bundle.crt`. (e.g., `/etc/ssl/certs/ca-certificates.crt`). 
 
 #### For problems with `pip`:
 ```python
@@ -47,7 +66,7 @@ git config --global http.sslCAInfo path/to/ca-bundle.crt
 ```
 [Reference](https://stackoverflow.com/questions/39356413/how-to-add-a-custom-ca-root-certificate-to-the-ca-store-used-by-pip-in-windows/52961564#52961564)
 
-### For problems with `requests`:
+#### For problems with `requests`:
 ```python
 # If you still having problems with `requests`, try adding this to the top of your code
 import requests
@@ -56,20 +75,6 @@ os.environ['REQUESTS_CA_BUNDLE'] = 'path/to/ca-bundle.crt'
 print(requests.get('https://www.google.com').status_code) # returns 200
 ```
 
-### For problems with `urllib`:
-```python
-# You'll have to add this to the top of your code:
-import urllib.request as urlrq
-import ssl
-try:
-   _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-   pass
-else:
-   ssl._create_default_https_context = _create_unverified_https_context
-print(urlrq.urlopen('https://www.google.com').status) # returns 200
-```
-[Reference](https://stackoverflow.com/questions/38916452/nltk-download-ssl-certificate-verify-failed)
 
 
 <!--

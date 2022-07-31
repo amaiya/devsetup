@@ -6,11 +6,11 @@
 4. Add support for tab-switching in Windows Terminal JSON with:
   - `{ "command": "nextTab", "keys": "ctrl+pgdn" }`
   - `{ "command": "prevTab", "keys": "ctrl+pgup" }`
-5. [OPTIONAL[ Edit Windows Terminal JSON to disable Ctrl-V paste (comment out or remove)
+5. [OPTIONAL] Edit Windows Terminal JSON (see lower left of Settings) to disable Ctrl-V paste (comment out or remove)
 6. Install Mamba/Conda:
   - `wget https://raw.githubusercontent.com/amaiya/devsetup/main/setup-conda.sh`
   - `bash setup-conda.sh`
-7. workplace setup:  Extra steps may be needed to install SSL certificates
+7. **Workplace Setup**:  Extra steps may be needed to install SSL certificates
 
 ## Workarounds for Corporate Firewalls
 

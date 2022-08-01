@@ -7,7 +7,7 @@
 if [ ! -e ~/.config ]; then
     cd
     rm -rf .jupyter .local .ssh .bash_history
-    for p in .jupyter .local .ssh .bash_history 
+    for p in .jupyter .local .ssh .bash_history .vim .vimrc .gitconfig
     #.git-credentials .gitconfig conda .kaggle .config .fastai .ipython
     do
         ln -s /storage/cfg/$p
@@ -30,3 +30,4 @@ alias rm="rm -i"
 alias rmf="rm -rfi"
 alias cleantex="rm -f *.aux *.dvi *.lis *.log *.blg *.bbl *.toc *.glo *.idx *.lof *.lot *.toc *.brf *.xcp *.synctex.    gz *.out"
 alias cleanpy="rm -f *.pyc"
+alias pi="pip install --user"

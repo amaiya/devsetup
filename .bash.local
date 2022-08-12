@@ -32,3 +32,6 @@ alias cleantex="rm -f *.aux *.dvi *.lis *.log *.blg *.bbl *.toc *.glo *.idx *.lo
 alias cleanpy="rm -f *.pyc"
 alias pi="pip install --user"
 alias jl="jupyter lab --no-browser"
+commit () { git commit -am "${1}" && git push; }
+fixes () { git commit -am "fixes #${1}" && git push; }
+mcommit () { git commit -am "[no ci] ${1}" && git push; }

@@ -23,3 +23,5 @@ sudo apt-get update && sudo apt-get dist-upgrade
 
 **Note:** The version of `cudatoolkit` should be the version returned by `nvcc --version`, not `nvidia-smi`.
 
+4. Upgrade all pip dependencies of a package: `pip install -U --upgrade-strategy eager <package_name>`. To be used before moving machine to an air-gapped network.
+

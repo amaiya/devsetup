@@ -11,14 +11,15 @@ sudo apt-get update && sudo apt-get dist-upgrade
 
 2. Install Mamba Virtual Environment
   - Run [setup-conda.sh](https://github.com/amaiya/devsetup/blob/main/setup-conda.sh)
-  - mamba install python=3.9
-  - mamba install pytorch torchvision cudatoolkit=11.6
-  - mamba install tensorflow
+  - `mamba install python=3.9`
+  - `mamba install pytorch torchvision cudatoolkit=11.6`
+  - `mamba install tensorflow`
   - `export LD_LIBRARY_PATH=/home/<username>/mambaforge/lib:$LD_LIBRARY_PATH`
 
 3. Setup up `python-venv` virtual environment
-  - `python3 -m venv myvenv --system-site-packages
+  - `python3 -m venv myvenv --system-site-packages`
   - `source myvenv/bin/activate`
   - upgrade numpy and typing in virtual environment and any other packages that pip complains about
 
+**Note:** The version of `cudatoolkit` should be the version returned by `nvcc --version`, not `nvidia-smi`.
 

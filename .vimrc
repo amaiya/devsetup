@@ -165,7 +165,8 @@ let g:Tex_ViewRule_dvi = 'xdvi -s 6'
 set visualbell
 set t_vb=
 
-
+" for PaperSpace Gradient Ctrl-key issues
+command! Vb :execute "normal! \<C-v>"
 
 
 

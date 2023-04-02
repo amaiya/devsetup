@@ -165,7 +165,9 @@ let g:Tex_ViewRule_dvi = 'xdvi -s 6'
 set visualbell
 set t_vb=
 
-" for PaperSpace Gradient Ctrl-key issues
+" for PaperSpace Gradient Ctrl-key issues - enter :Vb to enter visual model
+" Reference: https://stackoverflow.com/questions/63899874/how-to-enter-in-visual-block-mode-in-vim-by-command
+" To highlight enter line: Shift-V
 command! Vb :execute "normal! \<C-v>"
 
 

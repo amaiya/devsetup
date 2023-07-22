@@ -25,3 +25,5 @@ sudo apt-get update && sudo apt-get dist-upgrade
 
 4. Upgrade all pip dependencies of a package: `pip install -U --upgrade-strategy eager <package_name>`. To be used before moving machine to an air-gapped network.
 
+
+REFERENCE: [TensorFlow GPU Info](https://www.tensorflow.org/install/source#gpu)

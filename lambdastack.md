@@ -12,8 +12,8 @@ sudo apt-get update && sudo apt-get dist-upgrade
 2. Install Mamba Virtual Environment
   - Run [setup-conda.sh](https://github.com/amaiya/devsetup/blob/main/setup-conda.sh)
   - `mamba install python=3.9`
-  - `mamba install pytorch torchvision cudatoolkit=11.6` # or mamba install tensorflow=2.9 cudatoolkit=11.2 cudnn=8.1
-  - `mamba install tensorflow`
+  - `mamba install pytorch torchvision cudatoolkit=11.6` 
+  - `mamba install tensorflow` 
   - `export LD_LIBRARY_PATH=/home/<username>/mambaforge/lib:$LD_LIBRARY_PATH`
 
 3. Setup up `python-venv` virtual environment
@@ -27,3 +27,9 @@ sudo apt-get update && sudo apt-get dist-upgrade
 
 
 REFERENCE: [TensorFlow GPU Info](https://www.tensorflow.org/install/source#gpu)
+
+Additional notes:
+As of July 2023, this was required:
+```
+mamba install tensorflow=2.9 cudatoolkit=11.2 cudnn=8.1
+```

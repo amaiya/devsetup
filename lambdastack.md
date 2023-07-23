@@ -12,7 +12,7 @@ sudo apt-get update && sudo apt-get dist-upgrade
 2. Install Mamba Virtual Environment
   - Run [setup-conda.sh](https://github.com/amaiya/devsetup/blob/main/setup-conda.sh)
   - `mamba install python=3.9`
-  - `mamba install pytorch torchvision cudatoolkit=11.6` 
+  - `mamba install pytorch torchvision cudatoolkit=11.6 cudnn=8.4`
   - `mamba install tensorflow` 
   - `export LD_LIBRARY_PATH=/home/<username>/mambaforge/lib:$LD_LIBRARY_PATH`
 
@@ -28,8 +28,24 @@ sudo apt-get update && sudo apt-get dist-upgrade
 
 REFERENCE: [TensorFlow GPU Info](https://www.tensorflow.org/install/source#gpu)
 
-Additional notes:
-As of July 2023, this was required:
-```
-mamba install tensorflow=2.9 cudatoolkit=11.2 cudnn=8.1
+
+
+### Troubleshooting
+
+#### Mamba
+From July 2023, `mamba install cudatoolkit=11.6` not longer works. Error was `DNN library is not found`.
+Solution was:
+1. Tried different versions of `cudnn` starting from 8.1 until a the GPU version of TensorFlow was not being replaced with a CPU version. This worked: `mamba install cudnn=8.4`
+2. Used `export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda` based on [this post](https://stackoverflow.com/questions/68614547/tensorflow-libdevice-not-found-why-is-it-not-found-in-the-searched-path).
+i.e.,
+```shell
+$ find / -type d -name nvvm 2>/dev/null
+/usr/lib/cuda/nvvm
+$ cd /usr/lib/cuda/nvvm
+/usr/lib/cuda/nvvm$ ls
+libdevice
+/usr/lib/cuda/nvvm$ cd libdevice
+/usr/lib/cuda/nvvm/libdevice$ ls
+libdevice.10.bc
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
 ```

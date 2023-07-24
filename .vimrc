@@ -169,7 +169,9 @@ set t_vb=
 " Reference: https://stackoverflow.com/questions/63899874/how-to-enter-in-visual-block-mode-in-vim-by-command
 " To highlight enter line: Shift-V
 command! Vb :execute "normal! \<C-v>"
-
+" Variation:
+" Reference: https://vi.stackexchange.com/questions/3699/is-there-a-command-to-enter-visual-block-mode
+"command! Vb normal! <C-v>
 
 
 

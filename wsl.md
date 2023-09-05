@@ -26,6 +26,10 @@ You may need to [configure](https://askubuntu.com/questions/73287/how-do-i-insta
 The above should work fairly well with the system Python in WSL/Ubuntu.  However, if using Conda or Mamba, you may need some extra workarounds shown below.
 For instance, issues with `urllib` (e.g., when running `nltk.download`) have been observed. 
 
+If you get an SSL error to the effect of [unsafe legacy renegotiation disabled](https://stackoverflow.com/questions/75763525/curl-35-error0a000152ssl-routinesunsafe-legacy-renegotiation-disabled) (perhaps when you're trying to install something with `mamba` or `conda`, you can disable it with: 
+```sh
+ OPENSSL_CONF=<(cat /etc/ssl/openssl.cnf ; echo Options = UnsafeLegacyRenegotiation) mamba install pytorch cpuonly -c pytorch
+```
 
 #### For problems with `urllib`:
 ```python

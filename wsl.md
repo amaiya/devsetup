@@ -62,6 +62,7 @@ pip config list
 conda config --set ssl_verify path/to/ca-bundle.crt
 conda config --show ssl_verify
 ```
+You can also disable SSL verification: `conda config --set ssl_verify false` [reference](https://stackoverflow.com/questions/33699577/conda-update-fails-with-ssl-error-certificate-verify-failed).
 
 #### For problems with `git`:
 ```python

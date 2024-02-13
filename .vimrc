@@ -173,5 +173,6 @@ command! Vb :execute "normal! \<C-v>"
 " Reference: https://vi.stackexchange.com/questions/3699/is-there-a-command-to-enter-visual-block-mode
 "command! Vb normal! <C-v>
 
-
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 

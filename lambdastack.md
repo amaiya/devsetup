@@ -51,10 +51,10 @@ export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
 ```
 #### Lambda Labs GPU Cloud
 1. Install mamba
-2. mamba install -c "nvidia/label/cuda-12.3" cuda-toolkit
-3. `mamba install tensorflow` (e.g., 2.15.1).  This will install CUDNN.
-4. [optional] Running `pip install tensorflow[and-cuda]==2.15.1 ` also works (tried after STEP 3)
-5. `nvcc --version` will show new version
+2. `mamba install -c "nvidia/label/cuda-12.3" cuda-toolkit cudnn` 
+3. `mamba install tensorflow` (e.g., 2.15.1).  (This will install CUDNN if not done in previous setup.)
+4. [optional] Running `pip install tensorflow[and-cuda]==2.15.1 ` also works (tried after STEP 3). Installing TF 2.16.1 with pip did not work for some reason.
+5. `nvcc --version` will show new version.  Shows 12.4??
 References:
 https://discuss.tensorflow.org/t/tensorflow-version-2-16-just-released/23140
 https://hamel.dev/notes/cuda.html

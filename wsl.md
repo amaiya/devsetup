@@ -1,33 +1,33 @@
 # How to Setup WSL
 
 1. **Install WSL2** by following [these instructions](https://www.c-sharpcorner.com/article/how-to-install-windows-subsystem-for-linux-wsl2-on-windows-11/):
-  - Start Command Prompt as Adminstrator
-  - Run this to see the OS options: `wsl --list --online`
-  - Run this to install your choice: `wsl --install -d DISTRO-NAME`
+    - Start Command Prompt as Adminstrator
+    - Run this to see the OS options: `wsl --list --online`
+    - Run this to install your choice: `wsl --install -d DISTRO-NAME`
 2. **Configure Terminal**:
-  - Search Windows Terminal and open it
-  - Select **Settings** and choose the `DISTRO-NAME` you chose as the default.
+    - Search Windows Terminal and open it
+    - Select **Settings** and choose the `DISTRO-NAME` you chose as the default.
 3. [OPTIONAL] **Corporate Firewalls**: If you're behind a corporate firewall, see **Workarounds for Corporate Firewalls** below to install your company's certficates and get around other problems.
 4. **Accessing Windows folders**: Create a symbolic links to easily access your the home directory on the C drive of your Windows machine: `ln -s /mnt/c/Users/<your_Windows_username>`.
 5. **`build-essentials`**: Install `build-essential` package needed to compile software: `sudo apt install build-essentials`
 6. [OPTIONAL] **Install Mamba/Conda**:
-  - `wget https://raw.githubusercontent.com/amaiya/devsetup/main/setup-conda.sh`
-  - `bash setup-conda.sh`
+    - `wget https://raw.githubusercontent.com/amaiya/devsetup/main/setup-conda.sh`
+    - `bash setup-conda.sh`
 7. **Enabling GPU Support**: To run GPU-accelreated AI/ML models within WSL2, follow [these steps](https://docs.nvidia.com/cuda/wsl-user-guide/index.html#getting-started-with-cuda-on-wsl). This [site](https://docs.nvidia.com/deploy/cuda-compatibility/) is a helpful information on compatibility between drivers and CUDA.
 8. **CUDA Environment Variables**: Add the following to your `.bashrc` file:
-```sh
-export CUDA_HOME=/usr/local/cuda
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=$PATH:$CUDA_HOME/bin
-```
+    ```sh
+    export CUDA_HOME=/usr/local/cuda
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+    export PATH=$PATH:$CUDA_HOME/bin
+    ```
 9. **Test CUDA with `nvcc`**: Run `nvcc --version` as a test.
 10. **PyTorch**: Install PyTorch: `mamba  install pytorch cudnn`
 11. **Test CUDA with PyTorch**: Run the following in a standard Python shell:
-```python
-In [1]: import torch
-In [2]: torch.cuda.is_available()
-Out[2]: True
-```
+    ```python
+    In [1]: import torch
+    In [2]: torch.cuda.is_available()
+    Out[2]: True
+    ```
 
 ## Trouble-Shooting
 #### No network access in WSL2 when using 

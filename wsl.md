@@ -29,9 +29,6 @@
     Out[2]: True
     ```
 
-## Trouble-Shooting
-#### No network access in WSL2 when using 
-
 ## Workarounds for Corporate Firewalls
 
 You may need to [configure](https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate/94861#94861) the Ubuntu WSL system with your corporate SSL certificates:

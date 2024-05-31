@@ -1,4 +1,4 @@
-# How to Setup WSL
+# How to Setup WSL with CUDA Support
 
 1. **Install WSL2** by following [these instructions](https://www.c-sharpcorner.com/article/how-to-install-windows-subsystem-for-linux-wsl2-on-windows-11/):
     - Start Command Prompt as Adminstrator

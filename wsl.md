@@ -1,6 +1,6 @@
 # How to Setup WSL
 
-1. [Install WSL2](wsl --list --online):
+1. [Install WSL2](https://www.c-sharpcorner.com/article/how-to-install-windows-subsystem-for-linux-wsl2-on-windows-11/): `wsl --list --online`.
   - Start Command Prompt as Adminstrator)
   - Run this to see the OS options: `wsl --list --online`
   - Run this to install your choice: `wsl --install -d DISTRO-NAME`

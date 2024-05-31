@@ -1,16 +1,36 @@
 # How to Setup WSL
 
-1. Install WSL (start Command Prompt as Adminstrator): `wsl --install`
-2. Install [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=US)
-3. [OPTIONAL] Disable Terminal Bell in Settings of Windows Terminal
-4. [OPTIONAL] Add support for tab-switching in Windows Terminal JSON with:
-  - `{ "command": "nextTab", "keys": "ctrl+pgdn" }`
-  - `{ "command": "prevTab", "keys": "ctrl+pgup" }`
-5. [OPTIONAL] Edit Windows Terminal JSON (see lower left of Settings) to disable Ctrl-V paste (comment out or remove) if you use **vim** as an editor
+1. [Install WSL2](wsl --list --online):
+  - Start Command Prompt as Adminstrator)
+  - Run this to see the OS options: `wsl --list --online`
+  - Run this to install your choice: `wsl --install -d DISTRO-NAME`
+2. Configure Terminal:
+  - Search Windows Terminal and open it
+  - Select **Settings** and choose the `DISTRO-NAME` you chose as the default.
+3. [OPTIONAL] If you're behind a corporate firewall, see **Workarounds for Corporate Firewalls** below to install your company's certficates and get around other problems.
+4. Create a symbolic links to easily access your the home directory on the C drive of your Windows machine: `ln -s /mnt/c/Users/<your_Windows_username>`.
+5. Install `build-essential` package needed to compile software: `sudo apt install build-essentials`
 6. [OPTIONAL] Install Mamba/Conda:
   - `wget https://raw.githubusercontent.com/amaiya/devsetup/main/setup-conda.sh`
   - `bash setup-conda.sh`
-7. **Workplace Setup**:  Extra steps may be needed to install SSL certificates
+7. **Enabling GPU Support**: To run GPU-accelreated AI/ML models within WSL2, follow [these steps](https://docs.nvidia.com/cuda/wsl-user-guide/index.html#getting-started-with-cuda-on-wsl). This [site](https://docs.nvidia.com/deploy/cuda-compatibility/) is a helpful information on compatibility between drivers and CUDA.
+8. Add the following to your `.bashrc` file:
+```sh
+export CUDA_HOME=/usr/local/cuda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+export PATH=$PATH:$CUDA_HOME/bin
+```
+9. Run `nvcc --version` as a test.
+10. Install PyTorch: `mamba  install pytorch cudnn`
+11. Run the following in a standard Python shell:
+```python
+In [1]: import torch
+In [2]: torch.cuda.is_available()
+Out[2]: True
+```
+
+## Trouble-Shooting
+#### No network access in WSL2 when using 
 
 ## Workarounds for Corporate Firewalls
 
@@ -79,6 +99,16 @@ import os
 os.environ['REQUESTS_CA_BUNDLE'] = 'path/to/ca-bundle.crt'
 print(requests.get('https://www.google.com').status_code) # returns 200
 ```
+#### No network access in WSL2 when VPN is activated
+Follow [these instructions](https://github.com/microsoft/WSL/issues/10380#issuecomment-1909996792) and add the following flags to a file called `C:\Users\_username_\.wslconfig` file:
+```
+[experimental]
+networkingMode=mirrored
+dnsTunneling=true
+```
+
+#### The `llama-cpp-python` package is giving an error when trying to use the GPU in WSL2
+This appears to be a bug in `llama-cpp-python`. As a workaround, follow the steps described [here](https://github.com/abetlen/llama-cpp-python/issues/1064#issuecomment-1887952683).
 
 
 

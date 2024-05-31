@@ -1,13 +1,13 @@
 # How to Setup WSL
 
-1. [**Install WSL2**](https://www.c-sharpcorner.com/article/how-to-install-windows-subsystem-for-linux-wsl2-on-windows-11/): `wsl --list --online`.
+1. **Install WSL2** by following [these instructions](https://www.c-sharpcorner.com/article/how-to-install-windows-subsystem-for-linux-wsl2-on-windows-11/):
   - Start Command Prompt as Adminstrator)
   - Run this to see the OS options: `wsl --list --online`
   - Run this to install your choice: `wsl --install -d DISTRO-NAME`
 2. **Configure Terminal**:
   - Search Windows Terminal and open it
   - Select **Settings** and choose the `DISTRO-NAME` you chose as the default.
-3. [OPTIONAL] **Corporate Firewalls: ** If you're behind a corporate firewall, see **Workarounds for Corporate Firewalls** below to install your company's certficates and get around other problems.
+3. [OPTIONAL] **Corporate Firewalls**: If you're behind a corporate firewall, see **Workarounds for Corporate Firewalls** below to install your company's certficates and get around other problems.
 4. **Accessing Windows folders**: Create a symbolic links to easily access your the home directory on the C drive of your Windows machine: `ln -s /mnt/c/Users/<your_Windows_username>`.
 5. **`build-essentials`**: Install `build-essential` package needed to compile software: `sudo apt install build-essentials`
 6. [OPTIONAL] **Install Mamba/Conda**:

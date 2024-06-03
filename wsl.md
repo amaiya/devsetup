@@ -96,6 +96,18 @@ import os
 os.environ['REQUESTS_CA_BUNDLE'] = 'path/to/ca-bundle.crt'
 print(requests.get('https://www.google.com').status_code) # returns 200
 ```
+
+#### For problems with `httpx`:
+```python
+import httpx
+client = httpx.Client(verify="/path/to/ca-bundle.crt")
+# Btw, you can supply this to other libraries like `openai`
+from openai import OpenAI
+client = OpenAI(http_client=client)
+```
+
+If you don't have a certificate, you can also set `verify=False`.
+
 #### No network access in WSL2 when VPN is activated
 Follow [these instructions](https://github.com/microsoft/WSL/issues/10380#issuecomment-1909996792) and add the following flags to a file called `C:\Users\_username_\.wslconfig` file:
 ```

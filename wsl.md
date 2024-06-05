@@ -39,6 +39,13 @@ You may need to [configure](https://askubuntu.com/questions/73287/how-do-i-insta
 4. Let Ubuntu add the .crt file's path relative to /usr/local/share/ca-certificates to /etc/ca-certificates.conf: `sudo update-ca-certificates`
 5. Point `pip` to your CA certificates: `pip config set global.cert /etc/ssl/certs`
 6. Point `requests` to your CA certificates by adding this to your `.bashrc` file: `export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt`
+7. Set the following environment variables in `.bashrc`:
+```sh
+export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+export SSL_CERT_DIR=/etc/ssl/certs/ca-certificates.crt
+export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
 
 The above should work fairly well with the system Python in WSL/Ubuntu.  However, if using Conda or Mamba, you may need some extra workarounds shown below.
 For instance, issues with `urllib` (e.g., when running `nltk.download`) have been observed. 
@@ -47,6 +54,8 @@ If you get an SSL error to the effect of [unsafe legacy renegotiation disabled](
 ```sh
  OPENSSL_CONF=<(cat /etc/ssl/openssl.cnf ; echo Options = UnsafeLegacyRenegotiation) mamba install pytorch cpuonly -c pytorch
 ```
+
+For other workarounds, see below:
 
 #### For problems with `urllib`:
 ```python

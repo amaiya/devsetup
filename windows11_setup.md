@@ -1,7 +1,7 @@
 # Setting a Python development environment on Windows 11
 
-1. Download the latest Windows 11 NVIDIA driver for your graphics card from [here](https://www.nvidia.com/Download/index.aspx). On June 1st, 2024, the latest driver version was 552.22.
-2. Install [Miniconda](https://docs.anaconda.com/free/miniconda/). (Install for all users and set as system python.)
+1. Download the latest Windows 11 NVIDIA driver for your graphics card from [here](https://www.nvidia.com/Download/index.aspx). On June 1st, 2024, the latest driver version was 552.22. (You may also specifically need the CUDA toolkit from NVIDIA.)
+2. Install [Miniconda](https://docs.anaconda.com/free/miniconda/). (Install for all users and set as system python. See STEP 10.)
 3. If you're behind a corporate firewall, run this `conda config --set ssl_verify path/to/ca-bundle.crt` (where `ca-bundle.crt` contains certificates for your company.)
 4. Go to the [PyTorch - Get Started](https://pytorch.org/get-started/locally/) page and run the recommended command (e.g., `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`).
 5. Run this at a Python prompt to verify things are working:

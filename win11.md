@@ -99,3 +99,22 @@ Restart Windows.
 - rescenic: [No network connection in any distribution under WSL 2](https://github.com/microsoft/WSL/issues/5336#issuecomment-653881695)
 - cudatoolkit: https://stackoverflow.com/questions/61533291/is-it-still-necessary-to-install-cuda-before-using-the-conda-tensorflow-gpu-pack/61538568#61538568
 
+
+## Using System Python and uv (instead of Anaconda/Mamba)
+1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11.
+2. Install PyTorch: pip install torch torchvision torchaudio
+3. Set `PYTHONPATH` environment variable based on output of pip install commands (only needed if NOT using uv as described below): `C:\Users\<username>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages`
+4. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
+4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+5. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+5. pip install onprem # downgrade onnx if bug
+   If issues with building Chroma-hnsw, install Visual Studio Community and follow steps in OnPrem.LLM FAQ.
+6. add REQUESTS_BUNDLE to environment variable so hugging face models can be downloaded.
+
+### Using uv
+7. pip install uv
+8. uv venv --python 3.11 --seed --trusted-host github.com
+9. Add to PATH (ensure it is before system Scripts): .venv\Scripts
+10. Remove changes made in STEP 3 above.
+11. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
+

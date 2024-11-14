@@ -111,12 +111,18 @@ Restart Windows.
    If issues with building Chroma-hnsw, install Visual Studio Community and follow steps in OnPrem.LLM FAQ.
 6. add REQUESTS_BUNDLE to environment variable so hugging face models can be downloaded.
 
-### Using uv instead of System Python
+### Using uv instead of System Python (CPU Only)
 1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11. Needed to install `uv`.
 2. Open new `cmd` (not as Administrator) and run `pip install uv`
 3. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
 4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
-5. Run `uv venv --python 3.11 --seed --trusted-host github.com`
+5. Run `uv venv --python 3.11 --seed --trusted-host github.com` # using 3.11 because prebuilt wheel 3.12 files for `chroma-hnswlib` do not yet exist as of this writing
 6. Add to `Path` environment variable (and to BEFORE the entry aded in step 3): `C:\Users\amaiya\.venv\Scripts`
 7. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
+8. Install PyTorch: `uv pip install torch torchvision torchaudio`
+9. Install prebuilt llama-cpp-python: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+10. Install pdfplumber due to [uv bug](https://github.com/Unstructured-IO/unstructured-inference/issues/368)
+11. Install onprem: `pip install onprem`
+12. TODO: debug onnxruntime issue
+
 

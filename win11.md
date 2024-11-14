@@ -111,10 +111,12 @@ Restart Windows.
    If issues with building Chroma-hnsw, install Visual Studio Community and follow steps in OnPrem.LLM FAQ.
 6. add REQUESTS_BUNDLE to environment variable so hugging face models can be downloaded.
 
-### Using uv
-7. pip install uv
-8. uv venv --python 3.11 --seed --trusted-host github.com
-9. Add to PATH (ensure it is before system Scripts): .venv\Scripts
-10. Remove changes made in STEP 3 above.
-11. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
+### Using uv instead of System Python
+1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11. Needed to install `uv`.
+2. Open new `cmd` (not as Administrator) and run `pip install uv`
+3. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
+4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+5. Run `uv venv --python 3.11 --seed --trusted-host github.com`
+6. Add to `Path` environment variable (and to BEFORE the entry aded in step 3): `C:\Users\amaiya\.venv\Scripts`
+7. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
 

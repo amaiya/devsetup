@@ -101,15 +101,22 @@ Restart Windows.
 
 
 ## Using System Python and uv (instead of Anaconda/Mamba)
-1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11.
-2. Install PyTorch: pip install torch torchvision torchaudio
+1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger Microsoft Store installation in Windows 11.
+2. Install PyTorch: `pip install torch torchvision torchaudio`
 3. Set `PYTHONPATH` environment variable based on output of pip install commands (only needed if NOT using uv as described below): `C:\Users\<username>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages`
 4. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
-4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
 5. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-5. pip install onprem # downgrade onnx if bug
-   If issues with building Chroma-hnsw, install Visual Studio Community and follow steps in OnPrem.LLM FAQ.
-6. add REQUESTS_BUNDLE to environment variable so hugging face models can be downloaded.
+6. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
+7. Download and install Microsoft Visual Studo and enable the options as indicated in the [OnPrem.LLM FAQ](https://amaiya.github.io/onprem/#faq). This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we did in step 5 above).
+8. pip install onprem 
+9. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to corporate certs, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
+10. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+11. Try onprem to make sure it works:
+     ```python
+     from onprem import LLM
+     llm = LLM()
+     llm.prompt('List three cute names for a cat.')
+     ```
 
 ### Using uv instead of System Python (CPU Only)
 1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11. Needed to install `uv`.
@@ -129,5 +136,6 @@ Restart Windows.
      from onprem import LLM
      llm = LLM()
      llm.prompt('List three cute names for a cat.')
+     ```
 
 

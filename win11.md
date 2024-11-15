@@ -127,9 +127,9 @@ Restart Windows.
 6. Add to `Path` environment variable (and to BEFORE the entry aded in step 3): `C:\Users\amaiya\.venv\Scripts`
 7. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
 8. Install PyTorch: `uv pip install torch torchvision torchaudio`
-9. Install prebuilt llama-cpp-python: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-10. Install pdfplumber due to [uv bug](https://github.com/Unstructured-IO/unstructured-inference/issues/368)
-11. Install onprem: `pip install onprem`
+9. Install prebuilt llama-cpp-python: `uv pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+10. Install pdfplumber due to [uv bug](https://github.com/Unstructured-IO/unstructured-inference/issues/368): `uv pip install pdfplumber`
+11. Install onprem: `uv pip install onprem`
 12. Install latest Visual C++ Redistributable. (See As described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473), there is an issue with importing `onnxruntime`, which requires Visual C++ Redistributable.)  [Direct Link to EXE](https://aka.ms/vs/17/release/vc_redist.x64.exe).
 13. Try onprem:
      ```python

@@ -101,10 +101,10 @@ Restart Windows.
 
 
 ## Using System Python and uv (instead of Anaconda/Mamba)
-1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger Microsoft Store installation in Windows 11.
+1. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
 2. Install PyTorch: `pip install torch torchvision torchaudio`
 3. Set `PYTHONPATH` environment variable based on output of pip install commands (only needed if NOT using uv as described below): `C:\Users\<username>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages`
-4. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
+4. Add to `PATH` environment variable (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
 5. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
 6. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
 7. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development wiht C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we did in step 5 above).

@@ -1,7 +1,7 @@
 # Windows 11 Setup
 
 ## Using System Python (CPU Only)
-1. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development with C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we do below).
+1. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development with C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we do below). If you have issues, you might also try downloading and installing the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473). However the Redistributable should be automatically installed with Build Tools.
 2. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
 3. Create virtual environment: `python -m venv .venv`
 4. Activate virtual environment: `.venv\Scripts\activate`. You can optionally append `C:\Users\<username\.venv\Scripts` to `Path` environment variable, so that you only need to type `activate` to enter virtual environment in the future.
@@ -19,9 +19,7 @@
 	   Out[3]: 'NVIDIA RTX A1000 6GB Laptop GPU'
 	   ```
 7. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-8. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
-
-10. Install OnPrem.LLM: `pip install onprem `
+8. Install OnPrem.LLM: `pip install onprem `
 11. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to certs for your organization if behind a corporate, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
 12. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
 13. Try onprem to make sure it works:

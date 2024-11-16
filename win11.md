@@ -100,18 +100,31 @@ Restart Windows.
 - cudatoolkit: https://stackoverflow.com/questions/61533291/is-it-still-necessary-to-install-cuda-before-using-the-conda-tensorflow-gpu-pack/61538568#61538568
 
 
-## Using System Python and uv (instead of Anaconda/Mamba)
-1. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
-2. Install PyTorch: `pip install torch torchvision torchaudio`
-3. Set `PYTHONPATH` environment variable based on output of pip install commands (only needed if NOT using uv as described below): `C:\Users\<username>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages`
-4. Add to `PATH` environment variable (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
-5. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-6. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
-7. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development wiht C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we did in step 5 above).
-8. Install OnPrem.LLM: `pip install onprem `
-9. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to certs for your organization if behind a corporate, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
-10. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
-11. Try onprem to make sure it works:
+# Using System Python (instead of Anaconda/Mamba)
+1. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development with C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we do below).
+2. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
+3. Create virtual environment: `python -m venv .venv`
+4. Activate virtual environment: `.venv\Scripts\activate`. You can optionally append `C:\Users\<username\.venv\Scripts` to `Path` environment variable, so that you only need to type `activate` to enter virtual environment in the future.
+5. Install PyTorch:
+   - For CPU: `pip install torch torchvision torchaudio`
+   - For GPU: `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
+6. Run the following at Python prompt to verify things are working. (The PyTorch binaries ship with all CUDA runtime dependencies and you don't need to locally install a CUDA toolkit or cuDNN.)
+   ```python
+   In [1]: import torch
+
+   In [2]: torch.cuda.is_available()
+   Out[2]: True
+
+   In [3]: torch.cuda.get_device_name()
+   Out[3]: 'NVIDIA RTX A1000 6GB Laptop GPU'
+   ```
+7. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+8. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
+
+10. Install OnPrem.LLM: `pip install onprem `
+11. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to certs for your organization if behind a corporate, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
+12. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+13. Try onprem to make sure it works:
      ```python
      from onprem import LLM
      llm = LLM()

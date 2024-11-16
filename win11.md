@@ -1,4 +1,61 @@
-# Setting a Python development environment on Windows 11
+# Windows 11 Setup
+
+## Using System Python (CPU Only)
+1. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development with C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we do below).
+2. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
+3. Create virtual environment: `python -m venv .venv`
+4. Activate virtual environment: `.venv\Scripts\activate`. You can optionally append `C:\Users\<username\.venv\Scripts` to `Path` environment variable, so that you only need to type `activate` to enter virtual environment in the future.
+5. Install PyTorch:
+   - For CPU: `pip install torch torchvision torchaudio`
+   - For GPU (if you installed NVIDIA driver): `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
+     - Run the following at Python prompt to verify things are working. (The PyTorch binaries ship with all CUDA runtime dependencies and you don't need to locally install a CUDA toolkit or cuDNN.)
+	   ```python
+	   In [1]: import torch
+	
+	   In [2]: torch.cuda.is_available()
+	   Out[2]: True
+	
+	   In [3]: torch.cuda.get_device_name()
+	   Out[3]: 'NVIDIA RTX A1000 6GB Laptop GPU'
+	   ```
+7. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+8. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
+
+10. Install OnPrem.LLM: `pip install onprem `
+11. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to certs for your organization if behind a corporate, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
+12. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+13. Try onprem to make sure it works:
+     ```python
+     from onprem import LLM
+     llm = LLM()
+     llm.prompt('List three cute names for a cat.')
+     ```
+
+## Using uv instead of System Python (CPU Only)
+1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11. Needed to install `uv`.
+2. Open new `cmd` (not as Administrator) and run `pip install uv`
+3. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
+4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
+5. Run `uv venv --python 3.11 --seed --trusted-host github.com` # using 3.11 because prebuilt wheel 3.12 files for `chroma-hnswlib` do not yet exist as of this writing
+6. Add to `Path` environment variable (and to BEFORE the entry aded in step 3): `C:\Users\amaiya\.venv\Scripts`
+7. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
+8. Install PyTorch: `uv pip install torch torchvision torchaudio`
+9. Install prebuilt llama-cpp-python: `uv pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
+10. Install pdfplumber due to [uv bug](https://github.com/Unstructured-IO/unstructured-inference/issues/368): `uv pip install pdfplumber`
+11. Install onprem: `uv pip install onprem`
+12. Install latest Visual C++ Redistributable. (See As described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473), there is an issue with importing `onnxruntime`, which requires Visual C++ Redistributable.)  [Direct Link to EXE](https://aka.ms/vs/17/release/vc_redist.x64.exe).
+13. Try onprem:
+     ```python
+     from onprem import LLM
+     llm = LLM()
+     llm.prompt('List three cute names for a cat.')
+     ```
+
+
+
+
+
+## Using Conda/Mamba (with CUDA Support)
 
 1. Download the latest Windows 11 NVIDIA driver for your graphics card from [here](https://www.nvidia.com/Download/index.aspx). On June 1st, 2024, the latest driver version was 552.22. (You may also specifically need the CUDA toolkit from NVIDIA.)
 2. Install [Miniconda](https://docs.anaconda.com/free/miniconda/). (Install for all users and set as system python. See STEP 10.)
@@ -99,56 +156,5 @@ Restart Windows.
 - rescenic: [No network connection in any distribution under WSL 2](https://github.com/microsoft/WSL/issues/5336#issuecomment-653881695)
 - cudatoolkit: https://stackoverflow.com/questions/61533291/is-it-still-necessary-to-install-cuda-before-using-the-conda-tensorflow-gpu-pack/61538568#61538568
 
-
-# Using System Python (instead of Anaconda/Mamba)
-1. Download and install [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and make sure **Desktop development with C++** workload is selected and installed. This is needed to build `chroma-hnswlib` (as of this writing a pre-built wheel only exists for Python 3.11 and below). It is also needed if you need to build `llama-cpp-python` instead of installing a prebuilt wheel (as we do below).
-2. Install Python 3.12:  Open "cmd" as administrator and type python to trigger Microsoft Store installation in Windows 11.
-3. Create virtual environment: `python -m venv .venv`
-4. Activate virtual environment: `.venv\Scripts\activate`. You can optionally append `C:\Users\<username\.venv\Scripts` to `Path` environment variable, so that you only need to type `activate` to enter virtual environment in the future.
-5. Install PyTorch:
-   - For CPU: `pip install torch torchvision torchaudio`
-   - For GPU: `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
-6. Run the following at Python prompt to verify things are working. (The PyTorch binaries ship with all CUDA runtime dependencies and you don't need to locally install a CUDA toolkit or cuDNN.)
-   ```python
-   In [1]: import torch
-
-   In [2]: torch.cuda.is_available()
-   Out[2]: True
-
-   In [3]: torch.cuda.get_device_name()
-   Out[3]: 'NVIDIA RTX A1000 6GB Laptop GPU'
-   ```
-7. Install llama-cpp-python using pre-built wheel: `pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-8. Download and install the [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) to ensure `onnxruntime` can be imported, as described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473).
-
-10. Install OnPrem.LLM: `pip install onprem `
-11. [OPTIONAL] Add REQUESTS_BUNDLE to environment variable and point it to certs for your organization if behind a corporate, so hugging face models can be downloaded. Without this steup, you will need to use the `--trusted-host` option
-12. [OPTIONAL] Enable long paths if you get an error indicating you do:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
-13. Try onprem to make sure it works:
-     ```python
-     from onprem import LLM
-     llm = LLM()
-     llm.prompt('List three cute names for a cat.')
-     ```
-
-### Using uv instead of System Python (CPU Only)
-1. Install Python 3.12:  Open "cmd" as adminstrator and type python to trigger installation prompt from Windows 11. Needed to install `uv`.
-2. Open new `cmd` (not as Administrator) and run `pip install uv`
-3. Add to `PATH` environment varialbe (for ipython, uv, etc.):  `C:\Users\amaiya\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts`
-4. Enable long paths:  https://stackoverflow.com/questions/72352528/how-to-fix-winerror-206-the-filename-or-extension-is-too-long-error/76452218#76452218
-5. Run `uv venv --python 3.11 --seed --trusted-host github.com` # using 3.11 because prebuilt wheel 3.12 files for `chroma-hnswlib` do not yet exist as of this writing
-6. Add to `Path` environment variable (and to BEFORE the entry aded in step 3): `C:\Users\amaiya\.venv\Scripts`
-7. Install packages you want: `uv pip install cowsay --trusted-host pypi.org --trusted-host files.pythonhosted.org`
-8. Install PyTorch: `uv pip install torch torchvision torchaudio`
-9. Install prebuilt llama-cpp-python: `uv pip install llama-cpp-python==0.2.90 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu`
-10. Install pdfplumber due to [uv bug](https://github.com/Unstructured-IO/unstructured-inference/issues/368): `uv pip install pdfplumber`
-11. Install onprem: `uv pip install onprem`
-12. Install latest Visual C++ Redistributable. (See As described in [this issue](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/16342#discussioncomment-10279473), there is an issue with importing `onnxruntime`, which requires Visual C++ Redistributable.)  [Direct Link to EXE](https://aka.ms/vs/17/release/vc_redist.x64.exe).
-13. Try onprem:
-     ```python
-     from onprem import LLM
-     llm = LLM()
-     llm.prompt('List three cute names for a cat.')
-     ```
 
 

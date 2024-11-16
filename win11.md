@@ -7,8 +7,8 @@
 4. Activate virtual environment: `.venv\Scripts\activate`. You can optionally append `C:\Users\<username\.venv\Scripts` to `Path` environment variable, so that you only need to type `activate` to enter virtual environment in the future.
 5. Install PyTorch:
    - For CPU: `pip install torch torchvision torchaudio`
-   - For GPU (if you installed NVIDIA driver): `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
-     - Run the following at Python prompt to verify things are working. (The PyTorch binaries ship with all CUDA runtime dependencies and you don't need to locally install a CUDA toolkit or cuDNN.)
+   - For GPU (if you do happen to have installed an NVIDIA driver): `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
+     - Run the following at Python prompt to verify things are working. (The PyTorch binaries ship with all CUDA runtime dependencies and you don't need to locally install a CUDA toolkit or cuDNN, as long as NVIDIA driver is installed.)
 	   ```python
 	   In [1]: import torch
 	

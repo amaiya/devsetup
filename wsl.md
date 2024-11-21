@@ -128,7 +128,7 @@ dnsTunneling=true
 #### The `llama-cpp-python` package is giving an error when trying to use the GPU in WSL2
 This appears to be a bug in `llama-cpp-python`. As a workaround, follow the steps described [here](https://github.com/abetlen/llama-cpp-python/issues/1064#issuecomment-1887952683).
 
-
+>make BUILD_SHARED_LIBS=1 LLAMA_CUBLAS=1 -j libllama.so in the working llama.cpp directory, and replace the generated libllama.so in the vendor/llama.cpp dir
 
 <!--
 WSL/system: everything works (even requests is set correctly with no environment variable needed)

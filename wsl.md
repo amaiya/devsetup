@@ -130,6 +130,37 @@ This appears to be a bug in `llama-cpp-python`. As a workaround, follow the step
 
 >make BUILD_SHARED_LIBS=1 LLAMA_CUBLAS=1 -j libllama.so in the working llama.cpp directory, and replace the generated libllama.so in the vendor/llama.cpp dir
 
+See also this [GIST](https://gist.github.com/chrisbu/687cafefb87e0ddb3cb2d73301a9c64d)
+```sh
+# Might be needed from a fresh install
+sudo apt update
+sudo apt upgrade
+
+sudo apt install gcc
+
+# Might be needed, per: https://docs.nvidia.com/cuda/wsl-user-guide/index.html#cuda-support-for-wsl-2
+sudo apt-key del 7fa2af80
+
+# From https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda-repo-wsl-ubuntu-12-5-local_12.5.1-1_amd64.deb
+sudo dpkg -i cuda-repo-wsl-ubuntu-12-5-local_12.5.1-1_amd64.deb
+sudo cp /var/cuda-repo-wsl-ubuntu-12-5-local/cuda-*-keyring.gpg /usr/share/keyrings/
+
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-5
+
+# If needed
+sudo apt install python3.12-venv
+python3 -m venv ./ai_env
+source ./ai_env/bin/activate
+
+# Install and build llamapa-cpp-python
+CUDACXX=/usr/local/cuda-12/bin/nvcc CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all-major" FORCE_CMAKE=1 pip install llama-cpp-python --no-cache-dir --force-reinstall --upgrade
+
+```
+
 <!--
 WSL/system: everything works (even requests is set correctly with no environment variable needed)
 WSL/venv: Everything works after  6 workaround setps
